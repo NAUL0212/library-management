@@ -146,6 +146,11 @@ public class LibraryController {
         return "homePage";
     }
 
+    @GetMapping("/admin-dashboard")
+    public String showDashboard() {
+        return "admin-dashboard";  // Trả về file admin-dashboard.html trong templates
+    }
+
 
 }
 
