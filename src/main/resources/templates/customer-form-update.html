@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Update Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .required {
+            color: red;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .row input, .row select {
+            width: 48%;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            width: 100px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .reset {
+            background-color: #28a745;
+        }
+        .reset:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Customer Update Form</h2>
+        <form th:action="@{/customer/save}" method="post" th:object="${Customer}">
+            <input type="hidden" th:field="*{id}">
+            
+            <label for="company">Name of Company</label>
+            <input type="text" id="company_name" name="company_name" th:field="*{company_name}">
+        
+            <label for="address">Full Postal Address <span class="required">*</span></label>
+            <input type="text" id="street_address" name="street_address" th:field="*{street_address}" placeholder="Street Address">
+        
+            <div class="row">
+                <input type="text" id="city" name="city" th:field="*{city}" placeholder="City">
+                <input type="text" id="region" name="region" th:field="*{region}" placeholder="Region">
+            </div>
+        
+            <div class="row">
+                <input type="text" id="postal" name="postal" th:field="*{postal}" placeholder="Postal / Zip Code">
+                <select id="country" name="country" th:field="*{country}">
+                    <option value="">Country</option>
+                    <option value="US" th:selected="${Customer.country == 'US'}">United States</option>
+                    <option value="UK" th:selected="${Customer.country == 'UK'}">United Kingdom</option>
+                    <option value="CA" th:selected="${Customer.country == 'CA'}">Canada</option>
+                    <option value="AU" th:selected="${Customer.country == 'AU'}">Australia</option>
+                </select>
+            </div>
+        
+            <div class="buttons">
+                <button type="submit">Save</button>
+                <button type="reset" class="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
