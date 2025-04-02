@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/head :: head"></head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <head th:replace="admin/fragments/header :: header"></head>
+  <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>Danh sách thuê mượn sách</h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Library</a></li>
+        <li class="active">Loan List</li>
+      </ol>
+    </section>
+
+    <section class="content">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <a th:href="@{/library/loan-form-insert}" class="btn btn-success">➕ Tạo hóa đơn thuê</a>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Mã độc giả</th>
+                <th>Tên độc giả</th>
+                <th>Mã sách</th>
+                <th>Tên sách</th>
+                <th>Ngày mượn</th>
+                <th>Ngày trả</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="loan : ${loans}">
+                <td th:text="${loan.user.userId}"></td>
+                <td th:text="${loan.user.name}"></td>
+                <td th:text="${loan.book.bookId}"></td>
+                <td th:text="${loan.book.title}"></td>
+                <td th:text="${#temporals.format(loan.borrowDate, 'dd/MM/yyyy')}"></td>
+                <td th:text="${loan.returnDate != null ? #temporals.format(loan.returnDate, 'dd/MM/yyyy') : 'Chưa trả'}"></td>
+                <td>
+                  <span th:class="${loan.status == 'Borrowed' ? 'badge bg-warning' : 'badge bg-success'}" th:text="${loan.status}"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div th:replace="admin/fragments/footer :: footer"></div>
+</div>
+<div th:replace="admin/fragments/script :: script"></div>
+</body>
+</html>

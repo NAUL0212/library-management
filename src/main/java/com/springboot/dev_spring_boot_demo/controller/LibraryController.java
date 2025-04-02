@@ -52,7 +52,7 @@ public class LibraryController {
     public String list(Model model){
         List<Book> books = bookServiceImp.getAll();
         model.addAttribute("Book", books);
-        return "books";
+        return "admin/books/books";
     }
 
     @GetMapping("/book-form-insert")
@@ -61,7 +61,7 @@ public class LibraryController {
         model.addAttribute("categories", categories);
         Book book = new Book();
         model.addAttribute("book", book);
-        return "book-form-insert";
+        return "admin/books/book-form-insert";
     }
 
     @PostMapping("/save")
@@ -77,7 +77,7 @@ public class LibraryController {
         List<Category> categories = categoryServiceImp.getAll();    // // Lấy danh sách thể loại từ DB
         model.addAttribute("categories", categories);
         model.addAttribute("book", book);
-        return "book-form-update";
+        return "admin/books/book-form-update";
     }
 
     @DeleteMapping("/delete/{bookId}")
@@ -92,7 +92,7 @@ public class LibraryController {
     public String getAllLoans(Model model){
         List<Loan> loans = loanServiceImp.getAll();
         model.addAttribute("loans", loans);
-        return "bookRental";
+        return "admin/loans/bookRental";
     }
     
 
@@ -103,7 +103,7 @@ public class LibraryController {
         List<Book> books = bookServiceImp.getAll();
         model.addAttribute("books", books);
         model.addAttribute("loans", new Loan());
-        return "loan-form-insert";
+        return "admin/loans/loan-form-insert";
     }
 
     @PostMapping("/loan/save")
@@ -119,14 +119,14 @@ public class LibraryController {
     public String getAllUsers(Model model){
         List<User> users = userServiceImp.getAll();
         model.addAttribute("User", users);
-        return "users";
+        return "admin/users/users";
     }
 
     @GetMapping("/user-form-insert")
     public String formUserInsert(Model model){
         User user = new User();
         model.addAttribute("user", user);
-        return "user-form-insert";
+        return "admin/users/user-form-insert";
     }
 
     @PostMapping("/user/save")
@@ -135,22 +135,13 @@ public class LibraryController {
         return "redirect:/library/users";
     }
 
+
+    // hiển thị trang dashboard
     @GetMapping("/dashboard")
-    public String showDashboard(Model model){
-        long totalBooks = bookServiceImp.getTotalBooks();
-        long totalUsers = userServiceImp.getTotalUsers();
-
-        model.addAttribute("totalBooks", totalBooks);
-        model.addAttribute("totalUsers", totalUsers);
-
-        return "homePage";
+    public String admin(Model model){
+        model.addAttribute("title", "Library Admin Dashboard");
+        return "admin/index";
     }
-
-    @GetMapping("/admin-dashboard")
-    public String showDashboard() {
-        return "admin-dashboard";  // Trả về file admin-dashboard.html trong templates
-    }
-
 
 }
 
